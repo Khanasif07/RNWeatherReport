@@ -56,7 +56,7 @@ export  function Posts({}) {
   if (loading) {
     return (
       <View style={styles.center}>
-        <ActivityIndicator size= "large" color="yblue" animating={true} />
+        <ActivityIndicator size= "large" color="blue" animating={true} />
       </View>
     )
   }
