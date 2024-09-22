@@ -26,4 +26,9 @@ export const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
     },
+    retryTitle: {
+      fontSize: 14,
+      fontWeight: "bold",
+      color: "blue",
+    },
   })

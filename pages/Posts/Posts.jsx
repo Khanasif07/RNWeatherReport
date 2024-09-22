@@ -6,6 +6,8 @@ import {
   Text,
   Alert,
   View,
+  Button,
+  TouchableOpacity,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { styles } from "./Posts.style";
@@ -41,17 +43,14 @@ export  function Posts({}) {
     }
   }
 
-  async function fetchPrivateNewsData() {
-    try {
-      const newsResponse = await MeteoAPI.fetchPrivateNewsListData();
-      console.log("newsResponse", newsResponse);
-    } catch (err) {
-      Alert.alert("Error !", err);
-    }
-  }
-
-
   const { posts, loading, error } = state
+  const handleRetryPress = () => {
+    dispatch(actionCreators.loading())
+    const timer = setTimeout(() => {
+      fetchPosts()
+    }, 1000); 
+    console.log("retry tapped")
+  };
 
   if (loading) {
     return (
@@ -64,9 +63,12 @@ export  function Posts({}) {
   if (error) {
     return (
       <>
-      <Header city={"POSTS"} isShowSubTitle={false} />
+      {/* <Header city={"POSTS"} isShowSubTitle={false} /> */}
       <View style={styles.center}>
         <Text>Failed to load posts!</Text>
+        <TouchableOpacity onPress={() => handleRetryPress()}>
+        <Text style={ styles.retryTitle } >Retry</Text>
+        </TouchableOpacity>
       </View>
       </>
     )

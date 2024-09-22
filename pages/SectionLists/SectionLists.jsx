@@ -34,7 +34,7 @@ export function SectionLists({}) {
 
   return (
     <>
-      <Header city={"Section List"} isShowSubTitle={false} />
+      {/* <Header city={"Section List"} isShowSubTitle={false} /> */}
       <SectionList
         style={ ss.container}
         sections={sections}

@@ -43,7 +43,7 @@ export default function App() {
   });
 
   useEffect(() => {
-    subscribeToNotifications();
+    // subscribeToNotifications();
     // App is in background or killed and then the notification is pressed
     Notifications.addNotificationResponseReceivedListener((response) => {
       console.log(

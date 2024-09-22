@@ -12,7 +12,6 @@ export function FocusNews({}) {
   const { params } = useRoute();
   const [state, dispatch] = useReducer(reducer, initialState)
   const [newsList, setNewsList] = useState();
-  const [selectedIndex, setSelectedIndex] = useState(null);
   const nav = useNavigation();
 
   useEffect(() => {
@@ -31,11 +30,19 @@ export function FocusNews({}) {
       console.log("newsResponse", newsResponse);
       dispatch(actionCreators.success(newsResponse))
     } catch (err) {
+      dispatch(actionCreators.failure())
       Alert.alert("Error !", err);
     }
   }
 
   const { newsLists, loading, error } = state
+  const handleRetryPress = () => {
+    dispatch(actionCreators.loading())
+    const timer = setTimeout(() => {
+      fetchPrivateNewsData()
+    }, 1000); 
+    console.log("retry tapped")
+  };
 
   if (loading) {
     return (
@@ -48,20 +55,17 @@ export function FocusNews({}) {
   if (error) {
     return (
       <>
-      <Header city={"News"} isShowSubTitle={false} />
+      {/* <Header city={"News"} isShowSubTitle={false} /> */}
       <View style={s.center}>
-        <Text>Failed to load posts!</Text>
+        <Text>Failed to load news!</Text>
+        <TouchableOpacity onPress={() => handleRetryPress()}>
+        <Text style={ s.retryTitle } >Retry</Text>
+        </TouchableOpacity>
       </View>
       </>
     )
   }
 
-  const handlePress = (index) => { () => nav.navigate("FocusNews", { newsList })
-    // setSelectedIndex(index); // Update the state with the selected index
-    console.log("selected index",index)
-  };
-
-  
 
   return (
     <>
