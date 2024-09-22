@@ -5,7 +5,7 @@ import { MeteoBasic } from "../../components/MeteoBasic/MeteoBasic";
 import { getWeatherInterpretation } from "../../utils/meteo-utils";
 import { MeteoAdvanced } from "../../components/MeteoAdvanced/MeteoAdvanced";
 import { SearchBar } from "../../components/SearchBar/SearchBar";
-import { StatusBar } from "react-native";
+import { StatusBar,SafeAreaView } from "react-native";
 
 export function Home({ weather, city, onSubmitSearch }) {
   const currentWeather = weather.current_weather;
@@ -14,6 +14,8 @@ export function Home({ weather, city, onSubmitSearch }) {
   );
   return (
     <>
+    <SafeAreaView style={{ flex: 1,backgroundColor:"transparent"}}> 
+    <View style={s.container}>
       <View style={s.meteo_basic}>
       <StatusBar translucent backgroundColor="transparent" />
         <MeteoBasic
@@ -33,6 +35,8 @@ export function Home({ weather, city, onSubmitSearch }) {
           windspeed={currentWeather.windspeed}
         />
       </View>
+      </View>
+      </SafeAreaView>
     </>
   );
 }

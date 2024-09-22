@@ -5,7 +5,7 @@ import { News } from "../../components/News/News.jsx";
 import { actionCreators, initialState, reducer } from "../../utils/posts-utils";
 import { s } from "./FocusNews.style.js";
 import { MeteoAPI } from "../../api/meteo";
-import { ActivityIndicator, FlatList, Text, Alert, View,TouchableOpacity } from "react-native";
+import { ActivityIndicator, FlatList, Text, Alert, View,TouchableOpacity,SafeAreaView } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 export function FocusNews({}) {
@@ -70,7 +70,7 @@ export function FocusNews({}) {
   return (
     <>
       {/* <Header city={"News"} isShowSubTitle={false} /> */}
-      <View style={{ marginTop: 10 }}></View>
+      {/* <SafeAreaView style={{ flex: 1}}> */}
       <FlatList
         style={s.container}
         keyExtractor={(news) => news.postImageUrl}
@@ -87,6 +87,9 @@ export function FocusNews({}) {
           </TouchableOpacity>
         )}
       />
+       {/* <View style={s.footerView }>
+       </View> */}
+      {/* </SafeAreaView> */}
     </>
   );
 }

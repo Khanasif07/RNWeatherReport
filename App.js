@@ -12,7 +12,7 @@ import { SectionLists } from "./pages/SectionLists/SectionLists.jsx";
 import { Forecasts } from "./pages/Forecasts/Forecasts.jsx";
 import { Alert, ImageBackground } from "react-native";
 import backgroundImg from "./assets/background.png";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useReducer} from "react";
 import {
   requestForegroundPermissionsAsync,
   getCurrentPositionAsync,
@@ -25,6 +25,7 @@ import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
 import { StatusBar } from "react-native";
+import { actionCreators, initialState, reducer } from "./utils/posts-utils.js";
 
 const Stack = createNativeStackNavigator();
 
@@ -35,6 +36,7 @@ const navTheme = {
 };
 
 export default function App() {
+  const [state, dispatch] = useReducer(reducer, initialState)
   const [coordinates, setCoordinates] = useState();
   const [weather, setWeather] = useState();
   const [city, setCity] = useState();
@@ -62,10 +64,13 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    if (coordinates) {
+     dispatch(actionCreators.loading())
+     const timer = setTimeout(() => {
+      if (coordinates) {
       fetchWeatherByCoords(coordinates);
       fetchCityByCoords(coordinates);
     }
+    }, 1000); 
   }, [coordinates]);
 
   async function subscribeToNotifications() {
@@ -102,14 +107,34 @@ export default function App() {
     return token;
   }
 
+  const handleRetryPress = () => {
+    dispatch(actionCreators.loading())
+    const timer = setTimeout(() => {
+      if (coordinates) {
+      fetchWeatherByCoords(coordinates);
+      fetchCityByCoords(coordinates);
+    }
+    }, 1000); 
+    console.log("retry tapped")
+  };
+
   async function fetchWeatherByCoords(coords) {
+    try {
     const weatherResponse = await MeteoAPI.fetchWeatherByCoords(coords);
     setWeather(weatherResponse);
+    console.log("weatherResponse",weatherResponse )
+    }catch (err) {
+      Alert.alert("Aouch !", err);
+    }
   }
 
   async function fetchCityByCoords(coords) {
+    try {
     const cityResponse = await MeteoAPI.fetchCityByCoords(coords);
     setCity(cityResponse);
+    } catch (err) {
+      Alert.alert("Aouch !", err);
+    }
   }
 
   async function fetchCoordsByCity(city) {
@@ -143,7 +168,7 @@ export default function App() {
         source={backgroundImg}
       >
         <SafeAreaProvider>
-          <SafeAreaView style={s.container}>
+          {/* <SafeAreaView style={s.container}> */}
             {isFontLoaded && weather && (
               <Stack.Navigator
                 screenOptions={{
@@ -151,27 +176,36 @@ export default function App() {
                   headerShown: true,
                   animation: "fade",
                   // headerTitle: "HOME",
-                  animationDuration: 20
+                  headerTintColor: "white",
+                  headerBackTitleVisible: false,
+                  animationDuration: 20,
+                  headerStyle: {
+                    backgroundColor: 'transparent',  // Set your desired background color
+                  },
+                  headerTitleStyle: {
+                    fontWeight: 'bold',         // Optional: Set title font style
+                    fontSize: 22,
+                  },
                 }}
                 initialRouteName="Home"
               >
-                <Stack.Screen name="Home">
+                <Stack.Screen name="Home" options={{ title: "" }}>
                   {() => (
                     <Home
                       city={city}
                       weather={weather}
                       onSubmitSearch={fetchCoordsByCity}
                     />
-                  )}
+                  )} 
                 </Stack.Screen>
-                <Stack.Screen name="Forecasts" component={Forecasts} />
-                <Stack.Screen name="Posts" component={Posts} />
-                <Stack.Screen name="SectionLists" component={SectionLists} />
-                <Stack.Screen name="FocusNews" component={FocusNews} />
-                <Stack.Screen name="NewsDetail" component={NewsDetail} />
+                <Stack.Screen name="Forecasts" component={Forecasts} options={{ title: "FORECASTS" }} />
+                <Stack.Screen name="Posts" component={Posts} options={{ title: "POSTS" }} />
+                <Stack.Screen name="SectionLists" component={SectionLists} options={{ title: "SECTION LIST" }} />
+                <Stack.Screen name="FocusNews" component={FocusNews}  options={{ title: "FOCUS NEWS" }}/>
+                <Stack.Screen name="NewsDetail" component={NewsDetail} options={{ title: "NEWS DETAIL" }} />
               </Stack.Navigator>
             )}
-          </SafeAreaView>
+          {/* </SafeAreaView> */}
         </SafeAreaProvider>
       </ImageBackground>
     </NavigationContainer>

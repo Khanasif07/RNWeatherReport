@@ -1,7 +1,9 @@
 import { StyleSheet } from "react-native";
 export const ss = StyleSheet.create({
     container: {
+      marginTop:10,
       flex: 1,
+      paddingHorizontal:10,
     },
     row: {
       padding: 15,

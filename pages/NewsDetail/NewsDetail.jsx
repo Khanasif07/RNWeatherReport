@@ -33,6 +33,8 @@ export function NewsDetail({}) {
           <View>
             <Text style={s.content}>{params.item.content}</Text>
           </View>
+          <View style={s.footerView }>
+          </View>
         </View>
       </View>
     </ScrollView>

@@ -2,11 +2,9 @@ import React, { useEffect, useReducer, useState} from "react";
 import {
   ActivityIndicator,
   FlatList,
-  StyleSheet,
   Text,
   Alert,
   View,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import { useRoute } from "@react-navigation/native";
@@ -15,6 +13,7 @@ import { Txt } from "../../components/Txt/Txt";
 import { Header } from "../../components/Header/Header.jsx";
 import { MeteoAPI } from "../../api/meteo";
 import { actionCreators, initialState, reducer } from "../../utils/posts-utils";
+import { StatusBar,SafeAreaView } from 'react-native';
 
 export  function Posts({}) {
   const { params } = useRoute();
@@ -79,6 +78,8 @@ export  function Posts({}) {
   return (
     <>
     {/* <Header city={"POSTS"} isShowSubTitle={false} /> */}
+    <StatusBar barStyle="dark-content" translucent={true} backgroundColor="transparent" />
+    {/* <SafeAreaView style={{ flex: 1 }}> */}
     <FlatList
       style={styles.container}
       keyExtractor={(post) => post.id}
@@ -92,6 +93,7 @@ export  function Posts({}) {
         </View>
       )}
     />
+    {/* </SafeAreaView> */}
     </>
   );
 }

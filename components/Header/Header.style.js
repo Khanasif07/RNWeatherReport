@@ -11,7 +11,7 @@ const s = StyleSheet.create({
   },
   header_txts: {
     flex: 1,
-    marginRight: BACK_BTN_WIDTH,
+    marginRight: 0,
     alignItems: "center",
   },
   subtitle: {

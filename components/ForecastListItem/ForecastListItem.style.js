@@ -13,8 +13,9 @@ const s = StyleSheet.create({
   },
   day: {
     fontSize: 20,
-    width: 50,
-    textAlign: "center",
+    minWidth: 50,
+    // textAlign: "center",
+    textAlign: "left",
   },
   date: {
     fontSize: 20,

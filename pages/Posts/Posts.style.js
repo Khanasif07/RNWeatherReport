@@ -2,6 +2,7 @@ import { StyleSheet } from "react-native";
 export const styles = StyleSheet.create({
     container: {
       flex: 1,
+      paddingHorizontal: 15,
       // backgroundColor: '#1ACDA5',
     },
     post: {
@@ -9,7 +10,7 @@ export const styles = StyleSheet.create({
       borderBottomColor: 'white',
       paddingVertical: 20,
       paddingRight: 20,
-      marginLeft: 20,
+      marginLeft: 0,
     },
     title: {
       fontSize: 14,

@@ -5,6 +5,7 @@ const s = StyleSheet.create({
         flex: 1,
         justifyContent: 'space-between',
         alignItems: 'flex-start',
+        paddingHorizontal: 10,
         // backgroundColor: "white",
       },
       container: {
@@ -15,12 +16,12 @@ const s = StyleSheet.create({
         // backgroundColor: '#1ACDA5',
       },
       image: {
-        marginTop: 0,
-        width: Dimensions.get('window').width-40,
+        flex: 1,
+        width: Dimensions.get('window').width,
         height: 350,
-        padding: 0,
         backgroundColor: "white",
         marginBottom: 15,
+        // resizeMode: 'fill',
       },
       dynamicView: {
         // padding: 10,
@@ -63,7 +64,12 @@ const s = StyleSheet.create({
         flexShrink: 1, 
         color: "yellow",
         fontWeight: 'medium',
-      }
+      },
+      footerView:{
+        backgroundColor:"transparent",
+        height: 34,
+        width:Dimensions.get('window').width-20,
+      },
 });
 
 export { s };
