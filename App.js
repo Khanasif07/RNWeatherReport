@@ -24,7 +24,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as Notifications from "expo-notifications";
 import * as Device from "expo-device";
 import Constants from "expo-constants";
-import { StatusBar } from "react-native";
+import { StatusBar,ActivityIndicator ,View} from "react-native";
 import { actionCreators, initialState, reducer } from "./utils/posts-utils.js";
 
 const Stack = createNativeStackNavigator();
@@ -36,13 +36,13 @@ const navTheme = {
 };
 
 export default function App() {
-  const [state, dispatch] = useReducer(reducer, initialState)
   const [coordinates, setCoordinates] = useState();
   const [weather, setWeather] = useState();
   const [city, setCity] = useState();
   const [isFontLoaded] = useFonts({
     "Alata-Regular": require("./assets/fonts/Alata-Regular.ttf"),
   });
+ 
 
   useEffect(() => {
     // subscribeToNotifications();
@@ -64,7 +64,6 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-     dispatch(actionCreators.loading())
      const timer = setTimeout(() => {
       if (coordinates) {
       fetchWeatherByCoords(coordinates);
@@ -108,7 +107,6 @@ export default function App() {
   }
 
   const handleRetryPress = () => {
-    dispatch(actionCreators.loading())
     const timer = setTimeout(() => {
       if (coordinates) {
       fetchWeatherByCoords(coordinates);
@@ -122,7 +120,6 @@ export default function App() {
     try {
     const weatherResponse = await MeteoAPI.fetchWeatherByCoords(coords);
     setWeather(weatherResponse);
-    console.log("weatherResponse",weatherResponse )
     }catch (err) {
       Alert.alert("Aouch !", err);
     }
